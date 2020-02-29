@@ -2,6 +2,7 @@ package ru.itmo.java;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Task3 {
 
@@ -35,14 +36,16 @@ public class Task3 {
         if (inputArray == null || inputArray.length == 0) {
             return 0;
         }
-        int min_value = inputArray[0], max_value = inputArray[0], result = inputArray[0];
+        int minValue = inputArray[0];
+        int maxValue = inputArray[0];
+        int result = inputArray[0];
         for (int i = 1; i < inputArray.length; i++) {
-            result = Math.max(result, inputArray[i] * min_value);
-            result = Math.max(result, inputArray[i] * max_value);
-            if (inputArray[i] < min_value) {
-                min_value = inputArray[i];
-            } else if (inputArray[i] > max_value) {
-                max_value = inputArray[i];
+            result = Math.max(result, inputArray[i] * minValue);
+            result = Math.max(result, inputArray[i] * maxValue);
+            if (inputArray[i] < minValue) {
+                minValue = inputArray[i];
+            } else if (inputArray[i] > maxValue) {
+                maxValue = inputArray[i];
             }
         }
         return result;
@@ -117,7 +120,7 @@ public class Task3 {
         if (one == null || two == null || one.length() != two.length() || one.length() == 0) {
             return false;
         }
-        HashMap<Character, Integer> charCount = new HashMap<>();
+        Map<Character, Integer> charCount = new HashMap<>();
         for (int i = 0; i < one.length(); i++) {
             charCount.put(one.charAt(i), charCount.getOrDefault(one.charAt(i), 0) + 1);
             charCount.put(two.charAt(i), charCount.getOrDefault(two.charAt(i), 0) - 1);
@@ -180,7 +183,17 @@ public class Task3 {
         if (inputStrings == null) {
             return "";
         }
-        return String.join((separator != null) ? separator.toString() : " ", inputStrings);
+        StringBuilder builder = new StringBuilder();
+        Character delimiter = (separator != null) ? separator : ' ';
+        boolean isFirst = true;
+        for (String s : inputStrings) {
+            if (!isFirst) {
+                builder.append(delimiter);
+            }
+            isFirst = false;
+            builder.append(s);
+        }
+        return builder.toString();
     }
 
     /**
